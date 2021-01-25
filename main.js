@@ -1,90 +1,119 @@
-const Match = () => {
-    let playerScore = 0,
-        computerScore = 0;
-
-    const computer = ["rock", "scissors", "paper"]
-    const buttons = document.querySelectorAll(".button button")
-
-    const computerHandImage = document.getElementById('computerHand');
-    const playerHandImage = document.getElementById('playerHand');
+const Main = () => {
     const match = document.getElementsByClassName('match')[0];
+    let playerScore = 0;
+    let computerScore = 0;
+    //start screen
+    const startGame = () => {
+        const playBtn = document.querySelector(".start-match button");
+        const startScreen = document.querySelector(".start-match");
 
-    let computerHand;
-
-    buttons.forEach(button => {
-        button.addEventListener("click", () => {
-            computerChoice = Math.floor(Math.random() * 3);
-            computerHand = computer[computerChoice]
-
-            setTimeout(() => {
-                //update image in hands class 
-                playerHandImage.src = `./img/${button.textContent}.png`
-                computerHandImage.src = `./img/${computerHand}.png`
-
-                handsControl(button.textContent, computerHand)
-                updateScore(playerScore, computerScore)
-
-            }, 300);
-
+        playBtn.addEventListener("click", () => {
+            startScreen.classList.add("endGame");
+            match.classList.remove("endGame");
+            Match();
         });
-    });
+    }
+    //play game
+    const Match = () => {
 
+        const computer = ["rock", "scissors", "paper"]
+        const buttons = document.querySelectorAll(".button button")
+
+        const computerHandImage = document.getElementById('computerHand');
+        const playerHandImage = document.getElementById('playerHand');
+
+        let computerHand;
+
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                computerChoice = Math.floor(Math.random() * 3);
+                computerHand = computer[computerChoice]
+
+                setTimeout(() => {
+                    //update image in hands class 
+                    playerHandImage.src = `./img/${button.textContent}.png`
+                    computerHandImage.src = `./img/${computerHand}.png`
+
+                    handsControl(button.textContent, computerHand)
+
+                }, 300);
+            });
+        });
+    }
+    //compare hands 
     const handsControl = (playerHands, computerHands) => {
-        if (playerHands != computerHands) {
-            if (computerHand == "rock") {
-                if (playerHands == "scissors")
+        if (playerHands !== computerHands) {
+            if (playerHands === "rock") {
+                if (computerHands === "paper") {
                     computerScore++;
-                else
+                    updateScore()
+                }
+                else {
                     playerScore++;
+                    updateScore()
+                }
             }
-            if (computerHand == "scissors") {
-                if (playerHands == "paper")
+            if (playerHands === "scissors") {
+                if (computerHands === "rock") {
                     computerScore++;
-                else
+                    updateScore()
+                }
+                else {
                     playerScore++;
+                    updateScore()
+                }
             }
-            if (computerHand == "paper") {
-                if (playerHands == "rock")
-                    computerScore++;
-                else
+            if (playerHands === "paper") {
+                if (computerHands === "scissors") {
+                    computerScore++
+                    updateScore()
+                }
+                else {
                     playerScore++;
+                    updateScore()
+                }
             }
+        }
+        else {
+            document.querySelector(".match .tie").textContent = "Beraberlik"
         }
 
     }
-    const updateScore = (playerScore, computerScore) => {
+    //Score table 
+    const updateScore = () => {
+
         const player = document.getElementById("playerScore");
         const computer = document.getElementById("computerScore");
         //integer cast to string
         player.textContent = playerScore.toString();
         computer.textContent = computerScore.toString();
 
-        if (playerScore == 3 || computerScore == 3) {
+        if (playerScore === 3 || computerScore === 3) {
             match.classList.add("endGame")
-            if (playerScore == 10)
+            if (playerScore == 3)
                 restartMatch(match, "Player");
             else
                 restartMatch(match, "Computer");
-            // playerScore = 0;
-            // computerScore = 0;
         }
     }
-}
-const restartMatch = (match, winner) => {
-    const restartMatch = document.getElementById('restart');
-    const buttonRestart = document.getElementById("restart");
-    const winnerText = document.getElementById("winner");
-    //add restart box on window
-    restartMatch.style.display = "flex"
-    winnerText.textContent = winner.toUpperCase();
+    //End Game
+    const restartMatch = (match, winner) => {
+        const restartMatch = document.getElementById('restart');
+        const buttonRestart = document.getElementById("restart");
+        const winnerText = document.getElementById("winner");
+        //add restart box on window
+        restartMatch.style.display = "flex"
+        winnerText.textContent = winner.toUpperCase();
 
-    buttonRestart.addEventListener("click", () => {
-        restartMatch.style.display = "none"
-        match.classList.remove("endGame") //remove opacity from match
-        Match()
-    })
+        buttonRestart.addEventListener("click", () => {
+            restartMatch.style.display = "none"
+            match.classList.remove("endGame") //remove opacity from match
+            Match()
+        })
+    }
+    startGame();
 }
-Match();
+Main()
 /*TODO :
     - İsimler düzeltilecek
     - score tablosu oyun bittiğinde 0 olucak
