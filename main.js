@@ -2,6 +2,7 @@ const Main = () => {
     const match = document.getElementsByClassName('match')[0];
     let playerScore = 0;
     let computerScore = 0;
+
     //start screen
     const startGame = () => {
         const playBtn = document.querySelector(".start-match button");
@@ -13,36 +14,57 @@ const Main = () => {
             Match();
         });
     }
+
     //play game
     const Match = () => {
-
+        playerScore = 0;
+        computerScore = 0;
+        updateScore()
         const computer = ["rock", "scissors", "paper"]
         const buttons = document.querySelectorAll(".button button")
-
         const computerHandImage = document.getElementById('computerHand');
         const playerHandImage = document.getElementById('playerHand');
+        computerChoice = Math.floor(Math.random() * 3);
+        computerHand = computer[computerChoice]
 
-        let computerHand;
+        buttons[0].onclick = function () {
+            computerChoice = Math.floor(Math.random() * 3);
+            computerHand = computer[computerChoice]
+            setTimeout(() => {
+                //update image in hands class 
+                playerHandImage.src = `./img/${buttons[0].textContent}.png`
+                computerHandImage.src = `./img/${computerHand}.png`
 
-        buttons.forEach(button => {
-            button.addEventListener("click", () => {
-                computerChoice = Math.floor(Math.random() * 3);
-                computerHand = computer[computerChoice]
+                handsControl(buttons[0].textContent, computerHand)
+            }, 300);
+        }
+        buttons[1].onclick = function () {
+            computerChoice = Math.floor(Math.random() * 3);
+            computerHand = computer[computerChoice]
+            setTimeout(() => {
+                //update image in hands class 
+                playerHandImage.src = `./img/${buttons[1].textContent}.png`
+                computerHandImage.src = `./img/${computerHand}.png`
 
-                setTimeout(() => {
-                    //update image in hands class 
-                    playerHandImage.src = `./img/${button.textContent}.png`
-                    computerHandImage.src = `./img/${computerHand}.png`
+                handsControl(buttons[1].textContent, computerHand)
+            }, 300);
+        }
+        buttons[2].onclick = function () {
+            computerChoice = Math.floor(Math.random() * 3);
+            computerHand = computer[computerChoice]
+            setTimeout(() => {
+                //update image in hands class 
+                playerHandImage.src = `./img/${buttons[2].textContent}.png`
+                computerHandImage.src = `./img/${computerHand}.png`
 
-                    handsControl(button.textContent, computerHand)
-
-                }, 300);
-            });
-        });
+                handsControl(buttons[2].textContent, computerHand)
+            }, 300);
+        }
     }
     //compare hands 
     const handsControl = (playerHands, computerHands) => {
         if (playerHands !== computerHands) {
+            document.querySelector(".match .tie").textContent = ""
             if (playerHands === "rock") {
                 if (computerHands === "paper") {
                     computerScore++;
@@ -77,11 +99,10 @@ const Main = () => {
         else {
             document.querySelector(".match .tie").textContent = "Beraberlik"
         }
-
     }
+
     //Score table 
     const updateScore = () => {
-
         const player = document.getElementById("playerScore");
         const computer = document.getElementById("computerScore");
         //integer cast to string
@@ -90,16 +111,18 @@ const Main = () => {
 
         if (playerScore === 3 || computerScore === 3) {
             match.classList.add("endGame")
-            if (playerScore == 3)
+            if (playerScore == 3) {
                 restartMatch(match, "Player");
-            else
+            }
+            else {
                 restartMatch(match, "Computer");
+            }
         }
     }
     //End Game
     const restartMatch = (match, winner) => {
-        const restartMatch = document.getElementById('restart');
-        const buttonRestart = document.getElementById("restart");
+        const restartMatch = document.getElementsByClassName('restart-match')[0];
+        const buttonRestart = document.getElementById("restart-button");
         const winnerText = document.getElementById("winner");
         //add restart box on window
         restartMatch.style.display = "flex"
@@ -110,12 +133,13 @@ const Main = () => {
             match.classList.remove("endGame") //remove opacity from match
             Match()
         })
+
     }
     startGame();
 }
 Main()
 /*TODO :
     - İsimler düzeltilecek
-    - score tablosu oyun bittiğinde 0 olucak
-    - berabere yazısı gelicek
+    - score tablosu oyun bittiğinde 0 olucak (+)
+    - berabere yazısı gelicek (+)
  */
