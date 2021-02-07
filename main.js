@@ -109,9 +109,9 @@ const Main = () => {
         player.textContent = playerScore.toString();
         computer.textContent = computerScore.toString();
 
-        if (playerScore === 3 || computerScore === 3) {
+        if (playerScore === 1 || computerScore === 1) {
             match.classList.add("endGame")
-            if (playerScore == 3) {
+            if (playerScore == 1) {
                 restartMatch(match, "Player");
             }
             else {
@@ -138,8 +138,3 @@ const Main = () => {
     startGame();
 }
 Main()
-/*TODO :
-    - İsimler düzeltilecek
-    - score tablosu oyun bittiğinde 0 olucak (+)
-    - berabere yazısı gelicek (+)
- */
