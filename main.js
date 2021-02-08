@@ -63,8 +63,9 @@ const Main = () => {
     }
     //compare hands 
     const handsControl = (playerHands, computerHands) => {
+        const tie = document.querySelector(".match .tie");
         if (playerHands !== computerHands) {
-            document.querySelector(".match .tie").textContent = ""
+            tie.style.display = "none"
             if (playerHands === "rock") {
                 if (computerHands === "paper") {
                     computerScore++;
@@ -97,7 +98,7 @@ const Main = () => {
             }
         }
         else {
-            document.querySelector(".match .tie").textContent = "Beraberlik"
+            tie.style.display = "block"
         }
     }
 
@@ -109,9 +110,9 @@ const Main = () => {
         player.textContent = playerScore.toString();
         computer.textContent = computerScore.toString();
 
-        if (playerScore === 1 || computerScore === 1) {
+        if (playerScore === 2 || computerScore === 2) {
             match.classList.add("endGame")
-            if (playerScore == 1) {
+            if (playerScore == 2) {
                 restartMatch(match, "Player");
             }
             else {
