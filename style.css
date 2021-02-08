@@ -72,12 +72,13 @@ section {
     cursor: pointer;
 }
 
-.button button:focus {
+.button button:focus, .button button:hover{
     outline: none;
     background-color: #fff;
     color: #38306e;
     font-weight: bold;
 }
+
 
 .endGame {
     opacity: 0;
@@ -143,6 +144,19 @@ section {
 }
 
 .start-match button:focus, .start-match button:hover {
+    outline: none;
     border: 2px solid white;
     background-color: #38306e;
+}
+
+.match .tie{
+    display: none;
+    width: 200px;
+    padding: 10px;
+    background-color: rgba(202, 202, 202, 0.322);
+    border-radius: 5px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
 }
