@@ -22,48 +22,58 @@ const Main = () => {
         updateScore()
         const computer = ["rock", "scissors", "paper"]
         const buttons = document.querySelectorAll(".button button")
-        const computerHandImage = document.getElementById('computerHand');
-        const playerHandImage = document.getElementById('playerHand');
-        computerChoice = Math.floor(Math.random() * 3);
-        computerHand = computer[computerChoice]
+        const computerHand = document.getElementById('computerHand');
+        const playerHand = document.getElementById('playerHand');
+        let computerChoice = Math.floor(Math.random() * 3);
+        let computerHandImage
 
         buttons[0].onclick = function () {
+            playerHand.style.animation = "shakePlayer .5s ease "
+            computerHand.style.animation = "shakeComputer .5s ease "
             computerChoice = Math.floor(Math.random() * 3);
-            computerHand = computer[computerChoice]
+            computerHandImage = computer[computerChoice]
             setTimeout(() => {
                 //update image in hands class 
-                playerHandImage.src = `./img/${buttons[0].textContent}.png`
-                computerHandImage.src = `./img/${computerHand}.png`
+                playerHand.src = `./img/${buttons[0].textContent}.png`
+                computerHand.src = `./img/${computerHandImage}.png`
 
-                handsControl(buttons[0].textContent, computerHand)
+                handsControl(buttons[0].textContent, computerHandImage)
             }, 300);
         }
+        
         buttons[1].onclick = function () {
+            playerHand.style.animation = "shakePlayer .5s ease "
+            computerHand.style.animation = "shakeComputer .5s ease "
             computerChoice = Math.floor(Math.random() * 3);
-            computerHand = computer[computerChoice]
+            computerHandImage = computer[computerChoice]
             setTimeout(() => {
                 //update image in hands class 
-                playerHandImage.src = `./img/${buttons[1].textContent}.png`
-                computerHandImage.src = `./img/${computerHand}.png`
+               playerHand.src = `./img/${buttons[1].textContent}.png`
+               computerHand.src = `./img/${computerHandImage}.png`
 
-                handsControl(buttons[1].textContent, computerHand)
+                handsControl(buttons[1].textContent, computerHandImage)
             }, 300);
         }
         buttons[2].onclick = function () {
+            playerHand.style.animation = "shakePlayer .5s ease "
+            computerHand.style.animation = "shakeComputer .5s ease "
             computerChoice = Math.floor(Math.random() * 3);
-            computerHand = computer[computerChoice]
+            computerHandImage = computer[computerChoice]
+            
             setTimeout(() => {
                 //update image in hands class 
-                playerHandImage.src = `./img/${buttons[2].textContent}.png`
-                computerHandImage.src = `./img/${computerHand}.png`
+               playerHand.src = `./img/${buttons[2].textContent}.png`
+               computerHand.src = `./img/${computerHandImage}.png`
 
-                handsControl(buttons[2].textContent, computerHand)
+                handsControl(buttons[2].textContent, computerHandImage)
             }, 300);
         }
     }
     //compare hands 
     const handsControl = (playerHands, computerHands) => {
         const tie = document.querySelector(".match .tie");
+        document.getElementById('computerHand').style.removeProperty("animation")
+        document.getElementById('playerHand').style.removeProperty("animation")
         if (playerHands !== computerHands) {
             tie.style.display = "none"
             if (playerHands === "rock") {
@@ -100,6 +110,7 @@ const Main = () => {
         else {
             tie.style.display = "block"
         }
+        
     }
 
     //Score table 
@@ -110,9 +121,9 @@ const Main = () => {
         player.textContent = playerScore.toString();
         computer.textContent = computerScore.toString();
 
-        if (playerScore === 2 || computerScore === 2) {
+        if (playerScore === 3 || computerScore === 3) {
             match.classList.add("endGame")
-            if (playerScore == 2) {
+            if (playerScore == 3) {
                 restartMatch(match, "Player");
             }
             else {
@@ -132,6 +143,8 @@ const Main = () => {
         buttonRestart.addEventListener("click", () => {
             restartMatch.style.display = "none"
             match.classList.remove("endGame") //remove opacity from match
+            document.getElementById("playerHand").src="./img/rock.png"
+            document.getElementById("computerHand").src="./img/rock.png"
             Match()
         })
 
